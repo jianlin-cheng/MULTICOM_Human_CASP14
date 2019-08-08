@@ -1,0 +1,9 @@
+# multicom main scripts
+scripts/CASP13_human_ts_pipeline.pl
+scripts/Auto_human_server.pl
+scripts/global_local_human_2016.pl
+
+scripts/hhsearch_main_v15.pl
+scripts/P1_get_domains_by_hhsearch15.pl
+
+#examples/T0-run-multicom-T0951.sh
