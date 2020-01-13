@@ -68,8 +68,8 @@ while ($count <= 9)
 
 	#system("/home/casp13/Human_TS/scripts/stx_model_comb_global.pl /home/chengji//software/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3.5 0.8 0.5");
 	#system("/home/casp13/Human_TS/scripts/stx_model_comb_global.pl /home/chengji//software/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.5");
-	print("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/stx_model_comb_global.pl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.7\n\n");
-	system("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/stx_model_comb_global.pl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.7");
+	print("/home/jh7x3/MULTICOM_Human_CASP14/scripts/stx_model_comb_global.pl /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.7\n\n");
+	system("/home/jh7x3/MULTICOM_Human_CASP14/scripts/stx_model_comb_global.pl /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.7");
 
 	open(PIR, "$output_dir/$name.pir") || die "can't read $output_dir/$name.pir\n";
 	@pir = <PIR>;
@@ -83,8 +83,8 @@ while ($count <= 9)
 	{
 		print "Less than two templates, do local model combination...\n";
 		#system("/home/casp13/Human_TS/scripts/stx_model_comb.pl /home/chengji//software/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 2.5 $length $gdt");
-		print("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/stx_model_comb.pl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3 $length $gdt\n\n");
-		system("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/stx_model_comb.pl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3 $length $gdt");
+		print("/home/jh7x3/MULTICOM_Human_CASP14/scripts/stx_model_comb.pl /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3 $length $gdt\n\n");
+		system("/home/jh7x3/MULTICOM_Human_CASP14/scripts/stx_model_comb.pl /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3 $length $gdt");
 
 		open(PIR, "$output_dir/$name.pir") || die "can't read $output_dir/$name.pir\n";
 		@pir = <PIR>;
@@ -102,8 +102,8 @@ while ($count <= 9)
 	print "generate model...\n";
 	#system("/home/casp13/Human_TS/scripts/pir2ts_energy.pl /home/chengji//software/prosys/modeller7v7/ $casp_model_dir $output_dir $output_dir/$name.pir 3");
 	#system("/home/casp13/Human_TS/scripts/pir2ts_energy_9v7.pl /home/chengji//software/modeller9v7/ $casp_model_dir $output_dir $output_dir/$name.pir 5");
-	print("perl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/pir2ts_energy_9v16.pl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/modeller-9.16/ $casp_model_dir $output_dir $output_dir/$name.pir 8\n\n");
-	system("perl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/pir2ts_energy_9v16.pl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/modeller-9.16/ $casp_model_dir $output_dir $output_dir/$name.pir 8");
+	print("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/pir2ts_energy_9v16.pl /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/modeller-9.16/ $casp_model_dir $output_dir $output_dir/$name.pir 8\n\n");
+	system("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/pir2ts_energy_9v16.pl /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/modeller-9.16/ $casp_model_dir $output_dir $output_dir/$name.pir 8");
 
 		
 
@@ -118,13 +118,13 @@ while ($count <= 9)
 	#clash check
 	if (-f "$output_dir/$name-$count-s.pdb")
 	{
-		system("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/clash_check.pl $fasta_file $output_dir/$name-$count-s.pdb > $output_dir/clash$count.txt"); 
-		system("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/pdb2casp.pl $output_dir/$name-$count-s.pdb $count $name $output_dir/casp$count.pdb");
+		system("/home/jh7x3/MULTICOM_Human_CASP14/scripts/clash_check.pl $fasta_file $output_dir/$name-$count-s.pdb > $output_dir/clash$count.txt"); 
+		system("/home/jh7x3/MULTICOM_Human_CASP14/scripts/pdb2casp.pl $output_dir/$name-$count-s.pdb $count $name $output_dir/casp$count.pdb");
 	}
 	else
 	{
-		system("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/clash_check.pl $fasta_file $output_dir/$name-$count.pdb > $output_dir/clash$count.txt"); 
-		system("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/pdb2casp.pl $output_dir/$name-$count.pdb $count $name $output_dir/casp$count.pdb");
+		system("/home/jh7x3/MULTICOM_Human_CASP14/scripts/clash_check.pl $fasta_file $output_dir/$name-$count.pdb > $output_dir/clash$count.txt"); 
+		system("/home/jh7x3/MULTICOM_Human_CASP14/scripts/pdb2casp.pl $output_dir/$name-$count.pdb $count $name $output_dir/casp$count.pdb");
 	}
 
 	$count++;

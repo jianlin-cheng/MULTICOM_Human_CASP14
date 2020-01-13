@@ -11,7 +11,7 @@
 ##########################################################################
 
 my $GLOBAL_PATH;
-BEGIN { $GLOBAL_PATH ='/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/src/meta/hhsearch1.5/'; }
+BEGIN { $GLOBAL_PATH ='/home/jh7x3/MULTICOM_Human_CASP14/multicom/src/meta/hhsearch1.5/'; }
 if (@ARGV != 4)
 {
 	die "need three parameters: option file, sequence file, output dir.\n";
@@ -54,7 +54,7 @@ if ($pos >= 0)
 }
 
 $meta_dir=$GLOBAL_PATH;
-$hhsearch_dir="/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/hhsearch1.5.0/";
+$hhsearch_dir="/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/hhsearch1.5.0/";
 #$hhsearchdb=$GLOBAL_PATH.'/deepsf3d_tools/hhsearch_suite/hhsearch1.5.0/hhsearch15db';
 #$meta_common_dir=$GLOBAL_PATH.'/common_scripts';
 

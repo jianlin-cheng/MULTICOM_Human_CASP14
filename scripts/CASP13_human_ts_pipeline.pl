@@ -9,19 +9,19 @@ use English; # use English names, not cryptic ones
  sub get_seq($);
  sub get_bottom_10_percent($);
 
-$domain_parse = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/parse_domain_v3.pl";
-$pdb_program = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/pdp";
+$domain_parse = "/home/jh7x3/MULTICOM_Human_CASP14/scripts/parse_domain_v3.pl";
+$pdb_program = "/home/jh7x3/MULTICOM_Human_CASP14/tools/pdp";
 $modeller_dir = "";
-$tm_score = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32";
-$q_score = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/pairwiseQA/q_score";
-#$meta_dir = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/src/meta/";
-$multicom_dir = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/src/meta/"; 
+$tm_score = "/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32";
+$q_score = "/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/pairwiseQA/q_score";
+#$meta_dir = "/home/jh7x3/MULTICOM_Human_CASP14/multicom/src/meta/";
+$multicom_dir = "/home/jh7x3/MULTICOM_Human_CASP14/multicom/src/meta/"; 
 $pdb2casp2 = "$multicom_dir/script/pdb2casp.pl";
 #prosys dir
-$prosys_dir = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/src/prosys/";
+$prosys_dir = "/home/jh7x3/MULTICOM_Human_CASP14/multicom/src/prosys/";
 #model dir
 
-$modeller_dir = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/modeller-9.16/";
+$modeller_dir = "/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/modeller-9.16/";
 $domain_split_comb = 0; 
 if(@ARGV<3)
 {
@@ -140,8 +140,8 @@ $qlen = length($qseq);
 ###########FILTER MODELS#########
 #filter out redudant models from the same group, changed to use version 2 on July 9, 2012. ##
 my($same_group_log) = $dir_output."/"."Same_group.log";
-print("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score2/TMscore > $same_group_log\n\n");
-system("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score2/TMscore > $same_group_log");
+print("/home/jh7x3/MULTICOM_Human_CASP14/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score2/TMscore > $same_group_log\n\n");
+system("/home/jh7x3/MULTICOM_Human_CASP14/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score2/TMscore > $same_group_log");
 my($ren_filter) = $dir_output."/"."filtered_same_group_model/";     # save the filtered model 
 -s $ren_filter || system("mkdir $ren_filter");
 open(REN,"$name.nlist");
@@ -154,7 +154,7 @@ foreach my $ren_each (@ren_models)
 }
 
 #ab initio: generate model scores (for full length model only)   ####here is modelEvaluator
-my($wen_path_scwrl)="/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/scwrl4/Scwrl4";
+my($wen_path_scwrl)="/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/scwrl4/Scwrl4";
 
 
 my($wen_processed_model)=$dir_output."/"."scwrl_model";
@@ -233,8 +233,8 @@ if(-e "$dom_hhsearch_out/domain_info")
 {
 	print "!!!!! Found $dom_hhsearch_out/domain_info\n\n";
 }else{
-	print("perl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/P1_get_domains_by_hhsearch15.pl $addr_fasta $dom_hhsearch_out /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/databases/hhsearch1.5_db/hhsearch15db 40\n");
-	system("perl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/P1_get_domains_by_hhsearch15.pl $addr_fasta $dom_hhsearch_out /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/databases/hhsearch1.5_db/hhsearch15db 40");
+	print("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/P1_get_domains_by_hhsearch15.pl $addr_fasta $dom_hhsearch_out /home/jh7x3/MULTICOM_Human_CASP14/multicom/databases/hhsearch1.5_db/hhsearch15db 40\n");
+	system("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/P1_get_domains_by_hhsearch15.pl $addr_fasta $dom_hhsearch_out /home/jh7x3/MULTICOM_Human_CASP14/multicom/databases/hhsearch1.5_db/hhsearch15db 40");
 	`cp $dom_hhsearch_out/domain_info_thre40 $dom_hhsearch_out/domain_info`;
 }
 
@@ -264,8 +264,8 @@ if(-e "$disorder_out/$name.fasta.disorder")
 {
 	print "$disorder_out/$name.fasta.disorder generated\n\n";
 }else{
-	print("sh /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/disorder_new/bin/predict_diso.sh $addr_fasta $disorder_out/$name.fasta.disorder\n");
-	system("sh /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/disorder_new/bin/predict_diso.sh $addr_fasta $disorder_out/$name.fasta.disorder");
+	print("sh /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/disorder_new/bin/predict_diso.sh $addr_fasta $disorder_out/$name.fasta.disorder\n");
+	system("sh /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/disorder_new/bin/predict_diso.sh $addr_fasta $disorder_out/$name.fasta.disorder");
 }
 
 
@@ -283,8 +283,8 @@ if(-e $final_ranking and -e $final_ranking2)
 	print "Full_length evaluation ($final_ranking and $final_ranking2) has been finished!\n\n";
 }else{
 	print "Start to run full_length evaluation!\n\n";
-	print("perl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $contactfile $dir_models &> $full_pred_dir/auto_human_server.log\n\n");
-	system("perl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $contactfile $dir_models &> $full_pred_dir/auto_human_server.log");
+	print("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $contactfile $dir_models &> $full_pred_dir/auto_human_server.log\n\n");
+	system("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $contactfile $dir_models &> $full_pred_dir/auto_human_server.log");
 
 	print("perl /home/casp13/Human_TS/scripts/sort_deep_qa_score.pl $full_pred_dir/eva/HumanQA_gdt_prediction.txt $full_pred_dir/eva/HumanQA_gdt_prediction_sort.txt\n\n");
 	system("perl /home/casp13/Human_TS/scripts/sort_deep_qa_score.pl $full_pred_dir/eva/HumanQA_gdt_prediction.txt $full_pred_dir/eva/HumanQA_gdt_prediction_sort.txt");

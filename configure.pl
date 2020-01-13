@@ -7,8 +7,8 @@
 #																					#
 # Set directory of multicom databases and tools								        #
 
-$MULTICOM_dir = "/storage/htc/bdm/jh7x3/multicom/";							        
-$DeepRank_dir = "/storage/htc/bdm/jh7x3/DeepRank/";
+$MULTICOM_dir = "/home/jh7x3/multicom/";							        
+$DeepRank_dir = "/home/jh7x3/DeepRank/";
 
 
 ######################## !!! End of customize settings !!! ##########################
@@ -105,13 +105,15 @@ if (! -f $option_list)
 }
 
 configure_file2($option_list,'scripts');
+configure_file2($option_list,'examples');
 print "#########  Configuring option files, done\n\n\n";
 
 
 
-system("cp $install_dir/src/run_multicom.sh $install_dir/bin/run_multicom.sh");
+system("cp $install_dir/scripts/run_multicom_Human.sh $install_dir/bin/run_multicom_Human.sh");
 system("chmod +x $install_dir/bin/*.sh");
-
+chdir("examples");
+system("tar -zxf T0951.3D.srv.tar.gz");
 
 
 sub prompt_yn {

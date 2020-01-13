@@ -19,10 +19,10 @@ use MIME::Lite;
  #################################################
 # Set the environment variables
 #################################################
-$ENV{'PATH'}.=':/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/software/jdk1.7.0_01/bin';
-$ENV{'CLASSPATH'}.=':/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/software/3Drefine:/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/software/3Drefine/programs';
-#$tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32';
-$tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMscore';
+$ENV{'PATH'}.=':/home/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/software/jdk1.7.0_01/bin';
+$ENV{'CLASSPATH'}.=':/home/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/software/3Drefine:/home/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/software/3Drefine/programs';
+#$tool_TM = '/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32';
+$tool_TM = '/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMscore';
 	if(@ARGV<3)
 	{
 		print "This power script will only need two inputs : target name, fasta sequence! It will calculate the concensus score, and use clustering information to find five best models, further more, the script will use modeller to re-combine the model, and use my script to add the local quality, even send the generated prediction automatically! \n";
@@ -94,7 +94,7 @@ $tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMsc
  my($dir_tem) = $dir_output."/"."TEM";
  -s $dir_tem || system("mkdir $dir_tem");
 
-  my($auto_all) = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/DeepRank/bin/run_DeepRank.sh"; # use this in casp13
+  my($auto_all) = "/home/jh7x3/MULTICOM_Human_CASP14/DeepRank/bin/run_DeepRank.sh"; # use this in casp13
 
   if(!-s $auto_all)
   {
@@ -142,8 +142,8 @@ $tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMsc
 	###########FILTER MODELS#########
 	#filter out redudant models from the same group, changed to use version 2 on July 9, 2012. ##
 	my($same_group_log) = $dir_output."/"."Same_group.log";
-	print("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/mutlicom/tools/tm_score2/TMscore > $same_group_log\n\n");
-	system("/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/mutlicom/tools/tm_score2/TMscore > $same_group_log");
+	print("/home/jh7x3/MULTICOM_Human_CASP14/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  /home/jh7x3/MULTICOM_Human_CASP14/mutlicom/tools/tm_score2/TMscore > $same_group_log\n\n");
+	system("/home/jh7x3/MULTICOM_Human_CASP14/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  /home/jh7x3/MULTICOM_Human_CASP14/mutlicom/tools/tm_score2/TMscore > $same_group_log");
 	my($ren_filter) = $dir_output."/"."filtered_same_group_model/";     # save the filtered model 
 	-s $ren_filter || system("mkdir $ren_filter");
 	open(REN,"$name.nlist");
@@ -206,8 +206,8 @@ $tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMsc
   -s $final_ranking1 || die "Cannot find $final_ranking1\n";
   #my($filter_partial) = "/home/casp13/Human_TS/scripts/filter_partial.pl";
   $final_ranking_old = $eva_dir."/"."HumanQA_gdt_prediction_sort.txt";
-  print("perl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/sort_deep_qa_score.pl $final_ranking1 $final_ranking_old\n\n"); 
-  system("perl /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/sort_deep_qa_score.pl $final_ranking1 $final_ranking_old"); 
+  print("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/sort_deep_qa_score.pl $final_ranking1 $final_ranking_old\n\n"); 
+  system("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/sort_deep_qa_score.pl $final_ranking1 $final_ranking_old"); 
 
 =pod  
   $final_ranking = $eva_loss0048_dir."/"."HumanQA_gdt_prediction_loss0048_sort.txt"; # use this one as rerank method
@@ -240,17 +240,17 @@ $tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMsc
 
   ######### now use mufold the to clustering #####
   print "\n\n######### now use mufold the to clustering #####\n\n";
-  my($tool_mufold) = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/1_MUFOLD_cluster_for_one_target.pl";
+  my($tool_mufold) = "/home/jh7x3/MULTICOM_Human_CASP14/scripts/1_MUFOLD_cluster_for_one_target.pl";
   if(!-s $tool_mufold)
   {
     print "not exiting $tool_mufold!\n";
     exit(0);
   } 
   my($mucluster) = $dir_output."/"."MUFOLD_cluster";
-  print("perl $tool_mufold $filtered_model /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/MUfold_cluster/MUFOLD_CL $mucluster > /dev/null 2>&1\n\n");
-  if(system("perl $tool_mufold $filtered_model /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/MUfold_cluster/MUFOLD_CL $mucluster > /dev/null 2>&1"))
+  print("perl $tool_mufold $filtered_model /home/jh7x3/MULTICOM_Human_CASP14/tools/MUfold_cluster/MUFOLD_CL $mucluster > /dev/null 2>&1\n\n");
+  if(system("perl $tool_mufold $filtered_model /home/jh7x3/MULTICOM_Human_CASP14/tools/MUfold_cluster/MUFOLD_CL $mucluster > /dev/null 2>&1"))
   {
-    print "perl $tool_mufold $filtered_model /storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/MUfold_cluster/MUFOLD_CL $mucluster fails!\n";
+    print "perl $tool_mufold $filtered_model /home/jh7x3/MULTICOM_Human_CASP14/tools/MUfold_cluster/MUFOLD_CL $mucluster fails!\n";
     exit(0);
   }
 
@@ -318,7 +318,7 @@ $tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMsc
 
   ##### now use the new ranking to combine the model using structure similarity #####
   print "##### now use the new ranking to combine the model #####\n\n";
-  my($tool_combine) = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/global_local_human_2016.pl";
+  my($tool_combine) = "/home/jh7x3/MULTICOM_Human_CASP14/scripts/global_local_human_2016.pl";
   my($selected_out) = $dir_output."/"."Selected_models_combined";
   -s $selected_out || system("mkdir $selected_out");
   if(-e "$selected_out/combine_model.done")
@@ -342,7 +342,7 @@ $tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMsc
   $model_casp[4] = "casp5.pdb"; 
   
   print "###### compare the GDT score and check the model drifting #######\n\n";
-  my($tool_GDT) = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32";
+  my($tool_GDT) = "/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32";
   my($model1,$model2,$tmp_out);
   $tmp_out = $dir_output."/"."TM_tmp";
   
@@ -397,8 +397,8 @@ $tool_TM = '/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/TMsc
 			 }
 				chdir($dir_tem_refine);
 				`grep ATOM $selected_out/casp${idnew}.norefine.pdb  > casp${idnew}.norefine.pdb`;
-				print "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/bin/i3Drefine.sh   casp${idnew}.norefine.pdb  5 &> casp${idnew}.norefine.pdb.refinelog\n";
-				`/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/bin/i3Drefine.sh   casp${idnew}.norefine.pdb  5 &> casp${idnew}.norefine.pdb.refinelog`;
+				print "/home/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/bin/i3Drefine.sh   casp${idnew}.norefine.pdb  5 &> casp${idnew}.norefine.pdb.refinelog\n";
+				`/home/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/bin/i3Drefine.sh   casp${idnew}.norefine.pdb  5 &> casp${idnew}.norefine.pdb.refinelog`;
 				
 				open(IN,"casp${idnew}.norefine.pdb.refinelog") || next;
 				while(<IN>)
@@ -479,7 +479,7 @@ The GDT-TS score between initial and combined model of casp5.pdb is 0.8741
 
   ##### copy the final five models and add the local quality ####
   print "\n\n##### copy the final five models and add the local quality ####\n\n";
-  $add_local = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/CASP12_human_add_remark_QA.pl";
+  $add_local = "/home/jh7x3/MULTICOM_Human_CASP14/scripts/CASP12_human_add_remark_QA.pl";
   $final_top5 = $dir_output."/"."Final_top5_models_before";
   -s $final_top5 || system("mkdir $final_top5");
 
@@ -496,11 +496,11 @@ The GDT-TS score between initial and combined model of casp5.pdb is 0.8741
   
 
   ####### new added by Renzhi at 5/20/2016 for model refinement ###########
-  $model_refine_script = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/ModRefiner_refine.pl";
-  $real_refine_script = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/Real_run_ModRefiner.pl";
-  #my($refine_tool) = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/ModRefiner-l";
-  $refine_tool = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/ModRefiner-l";
-  $refine_TM = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32";
+  $model_refine_script = "/home/jh7x3/MULTICOM_Human_CASP14/scripts/ModRefiner_refine.pl";
+  $real_refine_script = "/home/jh7x3/MULTICOM_Human_CASP14/scripts/Real_run_ModRefiner.pl";
+  #my($refine_tool) = "/home/jh7x3/MULTICOM_Human_CASP14/tools/ModRefiner-l";
+  $refine_tool = "/home/jh7x3/MULTICOM_Human_CASP14/tools/ModRefiner-l";
+  $refine_TM = "/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/tm_score/TMscore_32";
   $refined_top5_no_local = $dir_output."/"."Final_top5_models_no_local";
   $refined_top5 = $dir_output."/"."Final_top5_models";
   if(!(-d $refined_top5))
@@ -568,7 +568,7 @@ The GDT-TS score between initial and combined model of casp5.pdb is 0.8741
 
   ##### now use the new ranking to combine the model using structure similarity #####
   print "##### now use the new ranking to combine the model #####\n\n";
-  $tool_combine = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/global_local_human_2016.pl";
+  $tool_combine = "/home/jh7x3/MULTICOM_Human_CASP14/scripts/global_local_human_2016.pl";
   $selected_out = $dir_output."/"."Selected_models_combined_noClustering";
   -s $selected_out || system("mkdir $selected_out");
   if(-e "$selected_out/combine_model.done")
@@ -647,8 +647,8 @@ The GDT-TS score between initial and combined model of casp5.pdb is 0.8741
 			 }
 				chdir($dir_tem_refine);
 				`grep ATOM $selected_out/casp${idnew}.norefine.pdb  > casp${idnew}.norefine.pdb`;
-				print "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/bin/i3Drefine.sh   casp${idnew}.norefine.pdb  5 &> casp${idnew}.norefine.pdb.refinelog\n";
-				`/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/bin/i3Drefine.sh   casp${idnew}.norefine.pdb  5 &> casp${idnew}.norefine.pdb.refinelog`;
+				print "/home/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/bin/i3Drefine.sh   casp${idnew}.norefine.pdb  5 &> casp${idnew}.norefine.pdb.refinelog\n";
+				`/home/jh7x3/MULTICOM_Human_CASP14/tools/i3Drefine/bin/i3Drefine.sh   casp${idnew}.norefine.pdb  5 &> casp${idnew}.norefine.pdb.refinelog`;
 				
 				open(IN,"casp${idnew}.norefine.pdb.refinelog") || next;
 				while(<IN>)
@@ -693,7 +693,7 @@ The GDT-TS score between initial and combined model of casp5.pdb is 0.8741
 
   ##### copy the final five models and add the local quality ####
   print "\n\n##### copy the final five models and add the local quality ####\n\n";
-  $add_local = "/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/scripts/CASP12_human_add_remark_QA.pl";
+  $add_local = "/home/jh7x3/MULTICOM_Human_CASP14/scripts/CASP12_human_add_remark_QA.pl";
   $final_top5 = $dir_output."/"."Final_top5_models_noClustering_before";
   -s $final_top5 || system("mkdir $final_top5");
   $refined_top5 = $dir_output."/"."Final_top5_models_noClustering";

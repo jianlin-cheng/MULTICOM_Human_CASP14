@@ -10,7 +10,7 @@
 #Date: 10/16/2007
 ##########################################################################
 my $GLOBAL_PATH;
-BEGIN { $GLOBAL_PATH ='/storage/hpc/scratch/jh7x3/MULTICOM_Human_CASP14/'; }
+BEGIN { $GLOBAL_PATH ='/home/jh7x3/MULTICOM_Human_CASP14/'; }
 if (@ARGV != 4)
 {
 	die "need three parameters: option file, sequence file, output dir.\n";
