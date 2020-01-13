@@ -17,5 +17,5 @@ if [ ! -d "$outputdir" ]; then
   mkdir -p $outputdir
 fi
 
-perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/CASP13_human_ts_pipeline.pl $targetid $fastafile $outputdir alignment $models
+perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/CASP13_human_ts_pipeline.pl $targetid $fastafile $outputdir alignment null $models
 
