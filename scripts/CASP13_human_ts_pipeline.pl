@@ -286,8 +286,8 @@ if(-e $final_ranking and -e $final_ranking2)
 	print("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $contactfile $dir_models &> $full_pred_dir/auto_human_server.log\n\n");
 	system("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $contactfile $dir_models &> $full_pred_dir/auto_human_server.log");
 
-	print("perl /home/casp13/Human_TS/scripts/sort_deep_qa_score.pl $full_pred_dir/eva/HumanQA_gdt_prediction.txt $full_pred_dir/eva/HumanQA_gdt_prediction_sort.txt\n\n");
-	system("perl /home/casp13/Human_TS/scripts/sort_deep_qa_score.pl $full_pred_dir/eva/HumanQA_gdt_prediction.txt $full_pred_dir/eva/HumanQA_gdt_prediction_sort.txt");
+	print("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/sort_deep_qa_score.pl $full_pred_dir/eva/HumanQA_gdt_prediction.txt $full_pred_dir/eva/HumanQA_gdt_prediction_sort.txt\n\n");
+	system("perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/sort_deep_qa_score.pl $full_pred_dir/eva/HumanQA_gdt_prediction.txt $full_pred_dir/eva/HumanQA_gdt_prediction_sort.txt");
 
 }
 
@@ -300,6 +300,7 @@ if(!(-d $dom_parse_out))
 	`mkdir $dom_parse_out`;
 }
 
+=pod
 ###### predict domain information by domain parser
 print "\n\n###### predict domain information by domain parser\n\n";
 if(-e "$dom_parse_out/domain_info")
@@ -309,7 +310,7 @@ if(-e "$dom_parse_out/domain_info")
 	print("perl /home/casp13/Human_TS/scripts/P1_get_domains_by_DomainParser.pl $addr_fasta $dir_models $final_ranking2 $dom_parse_out\n");
 	system("perl /home/casp13/Human_TS/scripts/P1_get_domains_by_DomainParser.pl $addr_fasta $dir_models $final_ranking2 $dom_parse_out");
 }
-
+=cut
 
 
 #### get final domain information taking disorder into consideration

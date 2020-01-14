@@ -23,21 +23,3 @@ fi
 printf "\nFinished.."
 printf "\nCheck log file </home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom.log>\n\n"
 
-sh /home/jh7x3/MULTICOM_Human_CASP14/multicom/src/visualize_multicom_cluster/P1_organize_prediction.sh /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/  T0951  /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/multicom_results
-
-
-if [[ ! -f "/home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/mcomb/casp1.pdb" ]];then 
-	printf "!!!!! Failed to run multicom, check the installation </home/jh7x3/MULTICOM_Human_CASP14/src/>\n\n"
-else
-	printf "\nJob successfully completed!"
-	printf "\nResults: /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/mcomb/casp1.pdb\n\n"
-fi
-
-
-perl /home/jh7x3/MULTICOM_Human_CASP14/multicom/installation/scripts/validate_integrated_predictions_final.pl  T0951  /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/full_length/meta /home/jh7x3/MULTICOM_Human_CASP14/multicom/installation/benchmark/TBM/T0951  /home/jh7x3/MULTICOM_Human_CASP14/multicom/multicom/installation/benchmark/TBM/T0951.pdb  meta 2>&1 | tee -a /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom.log
-
-
-printf "\nCheck final predictions.."
-
-
-perl /home/jh7x3/MULTICOM_Human_CASP14/multicom/installation/scripts/validate_integrated_predictions_final.pl  T0951  /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/mcomb /home/jh7x3/MULTICOM_Human_CASP14/multicom/installation/benchmark/TBM/T0951/mcomb /home/jh7x3/MULTICOM_Human_CASP14/multicom/installation/benchmark/TBM/T0951.pdb  casp 2>&1 | tee -a /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom.log

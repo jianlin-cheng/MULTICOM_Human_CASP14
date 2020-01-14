@@ -23,21 +23,3 @@ fi
 printf "\nFinished.."
 printf "\nCheck log file <SOFTWARE_PATH/test_out/T0951_multicom.log>\n\n"
 
-sh SOFTWARE_PATH/multicom/src/visualize_multicom_cluster/P1_organize_prediction.sh SOFTWARE_PATH/test_out/T0951_multicom/  T0951  SOFTWARE_PATH/test_out/T0951_multicom/multicom_results
-
-
-if [[ ! -f "SOFTWARE_PATH/test_out/T0951_multicom/mcomb/casp1.pdb" ]];then 
-	printf "!!!!! Failed to run multicom, check the installation <SOFTWARE_PATH/src/>\n\n"
-else
-	printf "\nJob successfully completed!"
-	printf "\nResults: SOFTWARE_PATH/test_out/T0951_multicom/mcomb/casp1.pdb\n\n"
-fi
-
-
-perl SOFTWARE_PATH/multicom/installation/scripts/validate_integrated_predictions_final.pl  T0951  SOFTWARE_PATH/test_out/T0951_multicom/full_length/meta SOFTWARE_PATH/multicom/installation/benchmark/TBM/T0951  SOFTWARE_PATH/multicom/multicom/installation/benchmark/TBM/T0951.pdb  meta 2>&1 | tee -a SOFTWARE_PATH/test_out/T0951_multicom.log
-
-
-printf "\nCheck final predictions.."
-
-
-perl SOFTWARE_PATH/multicom/installation/scripts/validate_integrated_predictions_final.pl  T0951  SOFTWARE_PATH/test_out/T0951_multicom/mcomb SOFTWARE_PATH/multicom/installation/benchmark/TBM/T0951/mcomb SOFTWARE_PATH/multicom/installation/benchmark/TBM/T0951.pdb  casp 2>&1 | tee -a SOFTWARE_PATH/test_out/T0951_multicom.log

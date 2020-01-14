@@ -89,8 +89,8 @@ if (-f "$fasta_file.local")
 #################################################################
 
 print "Generate alignments from the nr database...\n";
-print("perl $meta_dir/scripts/buildali.pl $fasta_file >/dev/null\n\n");
-system("perl $meta_dir/scripts/buildali.pl $fasta_file >/dev/null");
+print("perl $meta_dir/script/buildali.pl $fasta_file >/dev/null\n\n");
+system("perl $meta_dir/script/buildali.pl $fasta_file >/dev/null");
 
 #get file name prefix
 $idx = rindex($fasta_file, ".");
