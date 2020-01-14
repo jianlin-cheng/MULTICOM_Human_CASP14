@@ -43,8 +43,8 @@ sh T0-run-multicom-T0951.sh
 
 ```
    Usage:
-   $ sh bin/run_multicom.sh <target id> <file name>.fasta  <output folder>
+   $ sh bin/run_multicom_Human.sh <target id> <file name>.fasta  <output folder> <3D models>
 
    Example:
-   $ sh bin/run_multicom.sh T0993s2 examples/T0993s2.fasta test_out/T0993s2_out
+   $ sh bin/run_multicom_Human.sh T0993s2 /home/MULTICOM_Human_CASP14/examples/T0993s2.fasta /home/MULTICOM_Human_CASP14/test_out/T0993s2_out /home/MULTICOM_Human_CASP14/examples/T0951
 ```
