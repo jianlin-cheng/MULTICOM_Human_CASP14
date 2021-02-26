@@ -12,17 +12,16 @@
 use strict;
 use Net::FTP;
 
-if (@ARGV != 7){
+if (@ARGV != 6){
         die ("Need five parameters: the pdb_ids file, the target_ids file, the location to save the pdb original files, the path of folder of casp original sequence files, the path of alignment folder, the path of filtered pdb files!");
 }
 
 my $pdb_file = $ARGV[0];
 my $target_file = $ARGV[1];
-my $download_pdb_path = $ARGV[2];
-my $path = $ARGV[3];
-my $casp_orig_seq_path = $ARGV[4];
-my $align_path = $ARGV[5];
-my $pdb_filtered_path = $ARGV[6];
+my $path = $ARGV[2];
+my $casp_orig_seq_path = $ARGV[3];
+my $align_path = $ARGV[4];
+my $pdb_filtered_path = $ARGV[5];
 
 my $clustalw_tool = "../tools/clustalw1.83/clustalw";
 
@@ -58,7 +57,7 @@ my $host = "ftp.wwpdb.org";
 my $length = scalar(@pdb_ids);
 my $counter = 0;
 while($counter < $length){
-        my $file = "$download_pdb_path/pdb$pdb_ids[$counter]".'.ent.gz';
+        my $file = "pdb$pdb_ids[$counter]".'.ent.gz';
         my $file_new = "$target_ids[$counter]"."pdb$pdb_ids[$counter]".'.ent.gz';
 	print $target_ids[$counter]."\n";
 	my $file_unzipped = "$target_ids[$counter]"."pdb$pdb_ids[$counter]".'.ent';
