@@ -79,8 +79,11 @@ tar -zxvf T1046s1.3D.srv.tar.gz
 tar -zxvf T1046s2.3D.srv.tar.gz
 tar -zxvf T1072s2.3D.srv.tar.gz
 
-###run evaluation script, results are stored in ../target_results
-cd ../script
+cd ..
+mkdir temp target_results
+
+###run evaluation script, results are stored in target_results
+cd script
 perl eva_casp_v2.pl ../pdb_filtered/ ../tarball ../temp/ ../tools/TMscore_32 ./ ./target_ids ../target_results
 
 cd ../target_results/
