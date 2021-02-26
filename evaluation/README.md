@@ -26,7 +26,7 @@ pdb_ids     target_ids
 
 **(2) Create folders and copy sequence files (fasta format) into sequence folder(Already have CASP14 sequences in the folder)**
 ```
-mkdir pdb_ent pdb_orig alignment pdb_filtered
+mkdir pdb_orig alignment pdb_filtered
 ```
 
 **(3) Run following commands to generate filtered pdbs(stored in ../pdb_filtered)**
