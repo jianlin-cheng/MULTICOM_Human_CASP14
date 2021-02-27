@@ -12,16 +12,17 @@
 use strict;
 use Net::FTP;
 
-if (@ARGV != 6){
+if (@ARGV != 7){
         die ("Need five parameters: the pdb_ids file, the target_ids file, the location to save the pdb original files, the path of folder of casp original sequence files, the path of alignment folder, the path of filtered pdb files!");
 }
 
 my $pdb_file = $ARGV[0];
 my $target_file = $ARGV[1];
-my $path = $ARGV[2];
-my $casp_orig_seq_path = $ARGV[3];
-my $align_path = $ARGV[4];
-my $pdb_filtered_path = $ARGV[5];
+my $download_pdb_path = $ARGV[2];
+my $path = $ARGV[3];
+my $casp_orig_seq_path = $ARGV[4];
+my $align_path = $ARGV[5];
+my $pdb_filtered_path = $ARGV[6];
 
 my $clustalw_tool = "../tools/clustalw1.83/clustalw";
 
@@ -57,7 +58,7 @@ my $host = "ftp.wwpdb.org";
 my $length = scalar(@pdb_ids);
 my $counter = 0;
 while($counter < $length){
-        my $file = "pdb$pdb_ids[$counter]".'.ent.gz';
+        my $file = "$download_pdb_path/pdb$pdb_ids[$counter]".'.ent.gz';
         my $file_new = "$target_ids[$counter]"."pdb$pdb_ids[$counter]".'.ent.gz';
 	print $target_ids[$counter]."\n";
 	my $file_unzipped = "$target_ids[$counter]"."pdb$pdb_ids[$counter]".'.ent';
@@ -70,8 +71,8 @@ while($counter < $length){
 		print "$file is found~!\n";
 	}else{
 		print "Downloading $file from pdb ftp\n";
-		print("wget ftp://ftp.wwpdb.org/pub/pdb/data/structures/all/pdb/$file\n\n");   # "##" commented lines should be removed if you want to run the program.
-		system("wget ftp://ftp.wwpdb.org/pub/pdb/data/structures/all/pdb/$file");   # "##" commented lines should be removed if you want to run the program.
+		print("wget ftp://ftp.wwpdb.org/pub/pdb/data/structures/all/pdb/pdb$pdb_ids[$counter].ent.gz\n\n");   # "##" commented lines should be removed if you want to run the program.
+		system("wget ftp://ftp.wwpdb.org/pub/pdb/data/structures/all/pdb/pdb$pdb_ids[$counter].ent.gz");   # "##" commented lines should be removed if you want to run the program.
       	}
 	#`mv $file $path/$file_new`;   #copy the ftp downloaded pdb original files into ./pdb_orig
     `cp $file $path/$file_new`;   #copy the ftp downloaded pdb original files into ./pdb_orig
