@@ -6,22 +6,31 @@ MULTICOM human system for CASP14 tertiary structure prediction
 
 ```
 cd /home/MULTICOM_Human_CASP14
-git clone https://github.com/jianlin-cheng/MULTICOM_Human_CASP14.git
+git clone --branch CASP14_DeepRank3 https://github.com/jianlin-cheng/MULTICOM_Human_CASP14.git
 cd MULTICOM_Human_CASP14
 ```
 
+**(2) Download databases and tools (required)**
 
-**(2) Configure MULTICOM and DeepRank system (required)**
+```
+a. edit setup_database.pl
+
+    Set the path of variable '$multicom_human_db_tools_dir' for your current installation path (i.e., /data/commons/MULTICOM_Human_CASP14/).
+
+b. perl setup_database.pl
+```
+
+**(3) Configure DeepRank and DeepRank3 system (required)**
 
 ```
 a. edit configure.pl
 
-b. set the path of variable '$MULTICOM_dir' for MULTICOM method (i.e., /storage/htc/bdm/jh7x3/multicom/).
+b. set the path of variable '$DeepRank_dir' for MULTICOM method (i.e., /storage/htc/bdm/jh7x3/DeepRank/).
 
-c. set the path of variable '$DeepRank_dir' for DeepRank method (i.e., /storage/htc/bdm/jh7x3/DeepRank/).
+c. set the path of variable '$DeepRank3_dir' for DeepRank method (i.e., /storage/htc/bdm/jh7x3/DeepRank3/).
 
-$MULTICOM_dir = "/storage/htc/bdm/jh7x3/multicom/";
 $DeepRank_dir = "/storage/htc/bdm/jh7x3/DeepRank/";
+$DeepRank3_dir = "/storage/htc/bdm/jh7x3/DeepRank3/";
 
 
 d. save configure.pl
@@ -29,8 +38,7 @@ d. save configure.pl
 perl configure.pl
 ```
 
-
-**(3) Test example (required)**
+**(4) Test example (required)**
 
 ```
 cd examples/
@@ -39,7 +47,7 @@ sh T0-run-multicom-T0951.sh
 ```
 
 
-**(4) Run multicom prediction (required)**
+**(5) Run multicom prediction (required)**
 
 ```
    Usage:
