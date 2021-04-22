@@ -1,0 +1,3 @@
+#### template identification using hhsearch 1.5
+hhsearch15_tools:hhsearch1.5.0.tar.gz;psipred.tar.gz;psipred-2.61.tar.gz;blast-2.2.17.tar.gz;blast-2.2.20.tar.gz;modeller-9.16.tar.gz;tm_score2.tar.gz;tm_align2.tar.gz;clustalw1.83.tar.gz
+hhsearch15_databases:cm_lib.tar.gz;atom.tar.gz;seq.tar.gz;fr_lib.tar.gz;hhsearch1.5_db.tar.gz;big.tar.gz;

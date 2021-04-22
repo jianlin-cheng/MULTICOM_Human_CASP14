@@ -1,0 +1,13 @@
+# psipred
+tools/psipred/runpsipred
+tools/psipred/runpsipred_new
+
+# psipred-2.61
+tools/psipred-2.61/runpsipred
+
+# disorder_new
+tools/disorder_new/configure.pl
+
+# pspro2
+tools/pspro2/configure.pl
+tools/pspro2_lite/configure.pl

@@ -9,19 +9,17 @@ use English; # use English names, not cryptic ones
  sub get_seq($);
  sub get_bottom_10_percent($);
 
-$domain_parse = "SOFTWARE_PATH/scripts/parse_domain_v3.pl";
-$pdb_program = "SOFTWARE_PATH/tools/pdp";
-$modeller_dir = "";
-$tm_score = "SOFTWARE_PATH/multicom/tools/tm_score/TMscore_32";
-$q_score = "SOFTWARE_PATH/multicom/tools/pairwiseQA/q_score";
-#$meta_dir = "SOFTWARE_PATH/multicom/src/meta/";
-$multicom_dir = "SOFTWARE_PATH/multicom/src/meta/"; 
-$pdb2casp2 = "$multicom_dir/script/pdb2casp.pl";
-#prosys dir
-$prosys_dir = "SOFTWARE_PATH/multicom/src/prosys/";
-#model dir
+$tools_dir = "SOFTWARE_PATH/tools";
+$databases_dir = "SOFTWARE_PATH/databases";
+$scripts_dir = "SOFTWARE_PATH/scripts";
 
-$modeller_dir = "SOFTWARE_PATH/multicom/tools/modeller-9.16/";
+$tm_score = "$tools_dir/TMscore_32";
+$q_score = "$tools_dir/pairwiseQA/q_score";
+$pdb2casp2 = "$scripts_dir/pdb2casp.pl";
+#prosys dir
+$prosys_dir = "$scripts_dir/prosys/";
+#model dir
+$modeller_dir = "$tools_dir/modeller-9.16/";
 $domain_split_comb = 0; 
 if(@ARGV<3)
 {
@@ -41,16 +39,30 @@ my($targetname) = $ARGV[0];
 my($addr_fasta) = $ARGV[1];
 my($dir_output) = $ARGV[2];
 my($domain_information) = $ARGV[3]; # path, domain_parser, alignment, NULL
-my($contactfile) = $ARGV[4]; # path,  NULL
+my($dncon4_contactfile) = $ARGV[4]; # path,  NULL, dncon4 rr file
+my($distmap_file) = $ARGV[5]; # path,  NULL, dist map file
 -s $dir_output || system("mkdir $dir_output");
 
 if(!defined($domain_information))
 {
 	$domain_information='NULL';
 }
-if(!defined($contactfile))
+if(!defined($dncon4_contactfile))
 {
-	$contactfile='NULL';
+	$dncon4_contactfile='NULL';
+}
+else
+{
+	$dncon4_contactfile=abs_path($dncon4_contactfile);
+}
+
+if(!defined($distmap_file))
+{
+        $distmap_file='NULL';
+}
+else
+{
+        $distmap_file=abs_path($distmap_file);
 }
 
 if($domain_information eq 'domain_parser')
@@ -72,14 +84,14 @@ if($domain_information eq 'domain_parser')
 
 chdir($dir_output);  
 my($tar) = "NULL";
-if(@ARGV > 5)
+if(@ARGV > 6)
 {	# you provide the models folder, so no need to download from the website
-	$tar = abs_path($ARGV[5]);
+	$tar = abs_path($ARGV[6]);
 }
 else
 {
  #$tar = "http://www.predictioncenter.org/download_area/CASP13/server_predictions/$targetname.3D.srv.tar.gz";
- $tar = "http://www.predictioncenter.org/download_area/CASP13/server_predictions/$targetname.stage2.3D.srv.tar.gz";
+ $tar = "http://www.predictioncenter.org/download_area/CASP14/server_predictions/$targetname.stage2.3D.srv.tar.gz";
 }
 
 $dir_models = "NULL";
@@ -140,8 +152,8 @@ $qlen = length($qseq);
 ###########FILTER MODELS#########
 #filter out redudant models from the same group, changed to use version 2 on July 9, 2012. ##
 my($same_group_log) = $dir_output."/"."Same_group.log";
-print("SOFTWARE_PATH/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  SOFTWARE_PATH/multicom/tools/tm_score2/TMscore > $same_group_log\n\n");
-system("SOFTWARE_PATH/scripts/filter_model_same_group_v2.pl $name.mlist $name.nlist  SOFTWARE_PATH/multicom/tools/tm_score2/TMscore > $same_group_log");
+print("$scripts_dir/filter_model_same_group_v2.pl $name.mlist $name.nlist  $tools_dir/tm_score2/TMscore > $same_group_log\n\n");
+system("$scripts_dir/filter_model_same_group_v2.pl $name.mlist $name.nlist  $tools_dir/tm_score2/TMscore > $same_group_log");
 my($ren_filter) = $dir_output."/"."filtered_same_group_model/";     # save the filtered model 
 -s $ren_filter || system("mkdir $ren_filter");
 open(REN,"$name.nlist");
@@ -154,7 +166,7 @@ foreach my $ren_each (@ren_models)
 }
 
 #ab initio: generate model scores (for full length model only)   ####here is modelEvaluator
-my($wen_path_scwrl)="SOFTWARE_PATH/multicom/tools/scwrl4/Scwrl4";
+my($wen_path_scwrl)="$tools_dir/scwrl4/Scwrl4";
 
 
 my($wen_processed_model)=$dir_output."/"."scwrl_model";
@@ -233,8 +245,8 @@ if(-e "$dom_hhsearch_out/domain_info")
 {
 	print "!!!!! Found $dom_hhsearch_out/domain_info\n\n";
 }else{
-	print("perl SOFTWARE_PATH/scripts/P1_get_domains_by_hhsearch15.pl $addr_fasta $dom_hhsearch_out SOFTWARE_PATH/multicom/databases/hhsearch1.5_db/hhsearch15db 40\n");
-	system("perl SOFTWARE_PATH/scripts/P1_get_domains_by_hhsearch15.pl $addr_fasta $dom_hhsearch_out SOFTWARE_PATH/multicom/databases/hhsearch1.5_db/hhsearch15db 40");
+	print("perl $scripts_dir/P1_get_domains_by_hhsearch15.pl $addr_fasta $dom_hhsearch_out $databases_dir/hhsearch1.5_db/hhsearch15db 40\n");
+	system("perl $scripts_dir/P1_get_domains_by_hhsearch15.pl $addr_fasta $dom_hhsearch_out $databases_dir/hhsearch1.5_db/hhsearch15db 40");
 	`cp $dom_hhsearch_out/domain_info_thre40 $dom_hhsearch_out/domain_info`;
 }
 
@@ -264,8 +276,8 @@ if(-e "$disorder_out/$name.fasta.disorder")
 {
 	print "$disorder_out/$name.fasta.disorder generated\n\n";
 }else{
-	print("sh SOFTWARE_PATH/multicom/tools/disorder_new/bin/predict_diso.sh $addr_fasta $disorder_out/$name.fasta.disorder\n");
-	system("sh SOFTWARE_PATH/multicom/tools/disorder_new/bin/predict_diso.sh $addr_fasta $disorder_out/$name.fasta.disorder");
+	print("sh $tools_dir/disorder_new/bin/predict_diso.sh $addr_fasta $disorder_out/$name.fasta.disorder\n");
+	system("sh $tools_dir/disorder_new/bin/predict_diso.sh $addr_fasta $disorder_out/$name.fasta.disorder");
 }
 
 
@@ -277,14 +289,23 @@ if(!-s $full_pred_dir)
 ####### (1) run full-length human structure prediction 
 
 $final_ranking = $full_pred_dir."/eva/HumanQA_gdt_prediction_sort.txt";
-$final_ranking2 = $full_pred_dir."/eva_loss0048/HumanQA_gdt_prediction_loss0048_sort.txt";
-if(-e $final_ranking and -e $final_ranking2)
+#$final_ranking2 = $full_pred_dir."/eva_loss0048/HumanQA_gdt_prediction_loss0048_sort.txt";
+$final_ranking3 = $full_pred_dir."/eva_DeepRank3/DeepRank3_Cluster.txt";
+$final_ranking4 = $full_pred_dir."/eva_DeepRank3/DeepRank3_SingleQA_lite.txt";
+$final_ranking5 = $full_pred_dir."/eva_DeepRank3/DeepRank3_SingleQA.txt";
+
+#check dncon4 rr file and dist map file
+($full_dncon4_contactfile, $full_distmap_file) = &check_dncon4_and_dist_files($targetname, $addr_fasta, $full_pred_dir, $dncon4_contactfile, $distmap_file);
+
+if(-e $final_ranking and -e $final_ranking3 and -e $final_ranking4 and -e $final_ranking5)
 {
-	print "Full_length evaluation ($final_ranking and $final_ranking2) has been finished!\n\n";
-}else{
+	print "Full_length evaluation ($final_ranking, $final_ranking2, $final_ranking3, $final_ranking4, $final_ranking5) has been finished!\n\n";
+}
+else
+{
 	print "Start to run full_length evaluation!\n\n";
-	print("perl SOFTWARE_PATH/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $contactfile $dir_models &> $full_pred_dir/auto_human_server.log\n\n");
-	system("perl SOFTWARE_PATH/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $contactfile $dir_models &> $full_pred_dir/auto_human_server.log");
+	print("perl SOFTWARE_PATH/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $full_dncon4_contactfile $full_distmap_file $dir_models &> $full_pred_dir/auto_human_server.log\n\n");
+	system("perl SOFTWARE_PATH/scripts/Auto_human_server.pl $name $addr_fasta $full_pred_dir $full_dncon4_contactfile $full_distmap_file $dir_models &> $full_pred_dir/auto_human_server.log");
 
 	print("perl SOFTWARE_PATH/scripts/sort_deep_qa_score.pl $full_pred_dir/eva/HumanQA_gdt_prediction.txt $full_pred_dir/eva/HumanQA_gdt_prediction_sort.txt\n\n");
 	system("perl SOFTWARE_PATH/scripts/sort_deep_qa_score.pl $full_pred_dir/eva/HumanQA_gdt_prediction.txt $full_pred_dir/eva/HumanQA_gdt_prediction_sort.txt");
@@ -570,8 +591,6 @@ if (@domain_start > 1) #multiple domain case
 		#here we need distinguish easy and hard domains
 		#we may need to call ab inito appraoches
 		print "Get models for domain $i\n";
-		#system("$multicom_dir/script/multicom_server_v9.pl $meta_option_easy_domain domain$i.fasta $domain_dir");
-#		&extract_model($input_model_file, \@adjust_start, \@adjust_end, $output_model_file); 
 		open(RANK, $final_ranking2) || die "can't read $final_ranking2.\n"; 
 		@rank = <RANK>;
 		close RANK;
@@ -613,22 +632,29 @@ if (@domain_start > 1) #multiple domain case
 		{
 			`mkdir $domain_pred_dir`;
 		}
+
+		($domain_dncon4_contactfile, $domain_distmap_file) = &check_dncon4_and_dist_files("domain${i}", $domain_fasta, $domain_pred_dir, "", "");
 		####### (1) run full-length human structure prediction 
 
 		#perl /home/casp13/Human_TS/scripts/Auto_human_server.pl T0859 /home/casp13/Human_TS/run/T0859/T0859.fasta /home/casp13/Human_TS/run/T0859 /home/casp13/Human_QA_package/validation/dncon2_results/T0859.dncon2.rr 
 
 		$domain_final_ranking = $domain_pred_dir."/eva/HumanQA_gdt_prediction_sort.txt";
-		$domain_final_ranking2 = $domain_pred_dir."/eva_loss0048/HumanQA_gdt_prediction_loss0048_sort.txt";
-		if(-e $domain_final_ranking and -e $domain_final_ranking2)
+		#$domain_final_ranking2 = $domain_pred_dir."/eva_loss0048/HumanQA_gdt_prediction_loss0048_sort.txt";
+		$domain_final_ranking3 = $domain_pred_dir."/eva_DeepRank3/DeepRank3_Cluster.txt";
+		$domain_final_ranking4 = $domain_pred_dir."/eva_DeepRank3/DeepRank3_SingleQA_lite.txt";
+		$domain_final_ranking5 = $domain_pred_dir."/eva_DeepRank3/DeepRank3_SingleQA.txt";
+		if(-e $domain_final_ranking and -e $domain_final_ranking3 and -e $domain_final_ranking4 and -e domain_final_ranking5)
 		{
-			print "Domain_based evaluation ($domain_final_ranking) has been finished!\n\n";
-		}else{
-			print "Start to run full_length evaluation!\n\n";
-			print("perl /home/casp13/Human_TS/scripts/Auto_human_server.pl domain${i} $domain_fasta $domain_pred_dir NULL $domain_dir\n\n");
-			system("perl /home/casp13/Human_TS/scripts/Auto_human_server.pl domain${i} $domain_fasta $domain_pred_dir NULL $domain_dir");
+			print "Domain_based evaluation ($domain_final_ranking, $domain_final_ranking2, $domain_final_ranking3, $domain_final_ranking4, $domain_final_ranking5) has been finished!\n\n";
+		}
+        else
+        {
+			print "Start to run domain evaluation!\n\n";
+			print("perl $scripts_dir/Auto_human_server.pl domain${i} $domain_fasta $domain_pred_dir $domain_dncon4_contactfile $domain_distmap_file $domain_dir\n\n");
+			system("perl $scripts_dir/Auto_human_server.pl domain${i} $domain_fasta $domain_pred_dir $domain_dncon4_contactfile $domain_distmap_file $domain_dir");
 				
-			print("perl /home/casp13/Human_TS/scripts/sort_deep_qa_score.pl $domain_pred_dir/eva/HumanQA_gdt_prediction.txt $domain_pred_dir/eva/HumanQA_gdt_prediction_sort.txt\n\n");
-			system("perl /home/casp13/Human_TS/scripts/sort_deep_qa_score.pl $domain_pred_dir/eva/HumanQA_gdt_prediction.txt $domain_pred_dir/eva/HumanQA_gdt_prediction_sort.txt");
+			print("perl $scripts_dir/sort_deep_qa_score.pl $domain_pred_dir/eva/HumanQA_gdt_prediction.txt $domain_pred_dir/eva/HumanQA_gdt_prediction_sort.txt\n\n");
+			system("perl $scripts_dir/sort_deep_qa_score.pl $domain_pred_dir/eva/HumanQA_gdt_prediction.txt $domain_pred_dir/eva/HumanQA_gdt_prediction_sort.txt");
 		}
 	#### perform combination 
 
@@ -656,8 +682,8 @@ if ($domain_split_comb == 1)
 	{
 		$domain_dir = "$dir_output/domain$i";
 		#$rank_file =  "$dir_output/domain${i}_HumanTS/eva/HumanQA_gdt_prediction_sort.txt";
-		$rank_file =  "$dir_output/dom${i}_TS/eva_loss0048/HumanQA_gdt_prediction_loss0048_sort.txt";
-
+		#$rank_file =  "$dir_output/dom${i}_TS/eva_loss0048/HumanQA_gdt_prediction_loss0048_sort.txt";
+        $rank_file =  "$dir_output/dom${i}_TS/eva_DeepRank3/DeepRank3_Cluster.txt";
 		open(RANK, $rank_file) || die "can't open $rank_file.\n";
 		@drank = <RANK>;
 		close RANK;
@@ -723,17 +749,17 @@ if ($domain_split_comb == 1)
 
 		#generate models
 		print "Use Modeller to generate models combining multiple domains...\n";
-		print("$prosys_dir/script/pir2ts_energy.pl $modeller_dir $atom_dir $comb_dir $pir_file $cm_model_num\n\n");
-		system("$prosys_dir/script/pir2ts_energy.pl $modeller_dir $atom_dir $comb_dir $pir_file $cm_model_num");
+		print("$prosys_dir/pir2ts_energy.pl $modeller_dir $atom_dir $comb_dir $pir_file $cm_model_num\n\n");
+		system("$prosys_dir/pir2ts_energy.pl $modeller_dir $atom_dir $comb_dir $pir_file $cm_model_num");
 
 		if ( -f "$comb_dir/comb$idx.pdb")
 		{
-				print "A combined model $comb_dir/comb$idx.pdb is generated.\n";
+			print "A combined model $comb_dir/comb$idx.pdb is generated.\n";
 
 			$model_file = "$comb_dir/comb$idx.pdb";
 			`mv $model_file $model_file.org`;
-			system("/home/chengji/software/scwrl4/Scwrl4 -i $model_file.org -o $comb_dir/casp$idx.scw >/dev/null");
-			system("/home/chengji/casp8/model_cluster/script/clash_check.pl $name.fasta $comb_dir/casp$idx.scw > $comb_dir/clash$idx.txt");
+			system("$tools_dir/scwrl4/Scwrl4 -i $model_file.org -o $comb_dir/casp$idx.scw >/dev/null");
+			system("$scripts_dir/clash_check.pl $name.fasta $comb_dir/casp$idx.scw > $comb_dir/clash$idx.txt");
 			system("$pdb2casp2 $comb_dir/casp$idx.scw $idx $name $comb_dir/casp$idx.pdb");
 
 		}
@@ -835,4 +861,60 @@ sub extract_model
 	print OUT "TER\nEND\n";
 	close OUT; 
 #############################################################################################
+}
+
+sub check_dncon4_and_dist_files
+{
+	my $targetname = shift;
+	my $seq_file = shift;
+	my $output_dir = shift;
+	my $dncon4_contactfile = shift;
+	my $distmap_file = shift;
+
+	#check dncon4 rr file and dist map file
+	$QA_files_folder = "$output_dir/QA_files";
+	if(!-s $QA_files_folder)
+	{
+		`mkdir $QA_files_folder`;
+	}
+
+	print("\n###########Checking contact map and distance map###########\n");
+
+	if(-e $distmap_file and -e $dncon4_contactfile)
+	{
+		`cp $distmap_file $QA_files_folder/$targetname.txt`;
+		`cp $dncon4_contactfile $QA_files_folder/$targetname.rr`;
+		$distmap_file = "$QA_files_folder/$targetname.txt";
+		$dncon4_contactfile = "$QA_files_folder/$targetname.rr";
+	}
+	elsif(-e "$QA_files_folder/$targetname.txt" and -e "$QA_files_folder/$targetname.rr")
+	{
+		$distmap_file = "$QA_files_folder/$targetname.txt";
+		$dncon4_contactfile = "$QA_files_folder/$targetname.rr";
+	}
+	else
+	{
+	    $dist_dir = "$QA_files_folder/deepdist";
+	    -d "$dist_dir" || `mkdir $dist_dir`;
+		$cmd = "sh SOFTWARE_PATH/DeepRank3/tools/deepdist/predictors/ensemble/pred_deepdist1.sh $seq_file $dist_dir &> $QA_files_folder/run_dist.log";
+		print("\ngenerating contact and distance map file: $cmd \n");
+		$ren_return_val = system("$cmd");
+		if ($ren_return_val)
+		{
+			print "ERROR! deepdist execution failed!";
+			exit 0;
+		}
+		`cp $dist_dir/pred_map_ensem/rr/$targetname.rr $QA_files_folder/$targetname.rr`;
+		`cp $dist_dir/pred_map_ensem/$targetname.txt $QA_files_folder/$targetname.txt`;
+		$distmap_file = "$QA_files_folder/$targetname.txt";
+		$dncon4_contactfile = "$QA_files_folder/$targetname.rr";
+	}
+
+	if(!-e $distmap_file or !-e $dncon4_contactfile)
+	{
+		print "ERROR! cannot find contact or distance map file: $dncon4_contactfile, $distmap_file!";
+		exit 0;
+	}
+
+	return ($dncon4_contactfile, $distmap_file);
 }

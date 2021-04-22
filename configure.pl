@@ -7,9 +7,8 @@
 #																					#
 # Set directory of multicom databases and tools								        #
 
-$MULTICOM_dir = "/home/jh7x3/multicom/";							        
-$DeepRank_dir = "/home/jh7x3/DeepRank/";
-
+$DeepRank_dir = "/home/jianliu/github/DeepRank/";
+$DeepRank3_dir = "/home/jianliu/github/DeepRank3/";
 
 ######################## !!! End of customize settings !!! ##########################
 
@@ -67,32 +66,12 @@ if(-l "${install_dir}DeepRank")
 
 `ln -s $DeepRank_dir ${install_dir}DeepRank`;
 
-
-
-
-######### check the MULTICOM tool
-
-if($MULTICOM_dir eq "$cur_dir/")
+if(-l "${install_dir}DeepRank3")
 {
-	die "Same directory as MULTICOM main folder. Differnt path for original databases/tools folder $MULTICOM_dir is recommended.\n";
+	`rm ${install_dir}DeepRank3`;
 }
 
-#create link for multicom databases and tools
-if(-l "${install_dir}multicom")
-{
-	`rm ${install_dir}multicom`;
-}
-
-`ln -s $MULTICOM_dir ${install_dir}multicom`;
-
-
-
-#if (prompt_yn("multicom will be installed into <$install_dir> ")){
-#
-#}else{
-#	die "The installation is cancelled!\n";
-#}
-print "Start install multicom into <$install_dir>\n"; 
+`ln -s $DeepRank3_dir ${install_dir}DeepRank3`;
 
 
 print "#########  (1) Configuring option files\n";
@@ -109,11 +88,21 @@ configure_file2($option_list,'examples');
 print "#########  Configuring option files, done\n\n\n";
 
 
-
 system("cp $install_dir/scripts/run_multicom_Human.sh $install_dir/bin/run_multicom_Human.sh");
 system("chmod +x $install_dir/bin/*.sh");
 chdir("examples");
 system("tar -zxf T0951.3D.srv.tar.gz");
+
+print "#########  (2) Configuring scripts\n";
+
+$option_list = "$install_dir/installation/MULTICOM_configure_files/multicom_scripts_list";
+
+if (! -f $option_list)
+{
+        die "\nOption file $option_list not exists.\n";
+}
+configure_file($option_list,'scripts');
+print "#########  Configuring scripts, done\n\n\n";
 
 
 sub prompt_yn {
@@ -128,7 +117,6 @@ sub prompt {
   chomp(my $answer = <STDIN>);
   return $answer;
 }
-
 
 sub configure_file{
 	my ($option_list,$prefix) = @_;

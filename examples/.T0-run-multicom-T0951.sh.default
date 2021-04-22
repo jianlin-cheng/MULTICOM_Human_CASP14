@@ -11,15 +11,11 @@
 mkdir -p SOFTWARE_PATH/test_out/T0951_multicom/
 cd SOFTWARE_PATH/test_out/T0951_multicom/
 
-source SOFTWARE_PATH/multicom/tools/python_virtualenv/bin/activate
-export LD_LIBRARY_PATH=SOFTWARE_PATH/multicom/tools/boost_1_55_0/lib/:SOFTWARE_PATH/multicom/tools/OpenBLAS:$LD_LIBRARY_PATH
-
 if [[ ! -f "SOFTWARE_PATH/test_out/T0951_multicom/mcomb/casp1.pdb" ]];then 
-	perl SOFTWARE_PATH/scripts/CASP13_human_ts_pipeline.pl T0951 SOFTWARE_PATH/examples/T0951.fasta SOFTWARE_PATH/test_out/T0951_multicom/ alignment null SOFTWARE_PATH/examples/T0951
+	perl SOFTWARE_PATH/bin/run_multicom_Human.sh T0951 SOFTWARE_PATH/examples/T0951.fasta SOFTWARE_PATH/test_out/T0951_multicom/ SOFTWARE_PATH/examples/T0951
 
 fi
 
 
 printf "\nFinished.."
 printf "\nCheck log file <SOFTWARE_PATH/test_out/T0951_multicom.log>\n\n"
-

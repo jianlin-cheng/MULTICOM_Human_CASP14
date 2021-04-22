@@ -11,7 +11,7 @@
 ##########################################################################
 
 my $GLOBAL_PATH;
-BEGIN { $GLOBAL_PATH ='SOFTWARE_PATH/multicom/src/meta/hhsearch1.5/'; }
+BEGIN { $GLOBAL_PATH ='SOFTWARE_PATH/scripts/hhsearch1.5/'; }
 if (@ARGV != 4)
 {
 	die "need three parameters: option file, sequence file, output dir.\n";
@@ -54,7 +54,7 @@ if ($pos >= 0)
 }
 
 $meta_dir=$GLOBAL_PATH;
-$hhsearch_dir="SOFTWARE_PATH/multicom/tools/hhsearch1.5.0/";
+$hhsearch_dir="SOFTWARE_PATH/tools/hhsearch1.5.0/";
 #$hhsearchdb=$GLOBAL_PATH.'/deepsf3d_tools/hhsearch_suite/hhsearch1.5.0/hhsearch15db';
 #$meta_common_dir=$GLOBAL_PATH.'/common_scripts';
 
@@ -121,13 +121,13 @@ system("$hhsearch_dir/hhsearch -i $filename.hhm -d $hhsearchdb");
 #output file is: name.hhr
 
 print "generate ranking list...\n";
-print("perl $meta_dir/scripts/rank_templates.pl $filename.hhr $work_dir/$name.rank\n\n");
-system("perl $meta_dir/scripts/rank_templates.pl $filename.hhr $work_dir/$name.rank");
+print("perl $meta_dir/script/rank_templates.pl $filename.hhr $work_dir/$name.rank\n\n");
+system("perl $meta_dir/script/rank_templates.pl $filename.hhr $work_dir/$name.rank");
 
 #parse the blast output
 print "parse hhsearch output...\n";
-print("perl $meta_dir/scripts/parse_hhsearch.pl $filename.hhr $fasta_file.local\n\n");
-system("perl $meta_dir/scripts/parse_hhsearch.pl $filename.hhr $fasta_file.local");
+print("perl $meta_dir/script/parse_hhsearch.pl $filename.hhr $fasta_file.local\n\n");
+system("perl $meta_dir/script/parse_hhsearch.pl $filename.hhr $fasta_file.local");
 
 
 MULTICOM:

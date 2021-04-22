@@ -8,18 +8,14 @@
 #SBATCH --mem-per-cpu=2G
 #SBATCH --time 2-00:00
 
-mkdir -p /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/
-cd /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/
+mkdir -p /home/jianliu/MULTICOM_Human_CASP14/test_out/T0951_multicom/
+cd /home/jianliu/MULTICOM_Human_CASP14/test_out/T0951_multicom/
 
-source /home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/python_virtualenv/bin/activate
-export LD_LIBRARY_PATH=/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/boost_1_55_0/lib/:/home/jh7x3/MULTICOM_Human_CASP14/multicom/tools/OpenBLAS:$LD_LIBRARY_PATH
-
-if [[ ! -f "/home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/mcomb/casp1.pdb" ]];then 
-	perl /home/jh7x3/MULTICOM_Human_CASP14/scripts/CASP13_human_ts_pipeline.pl T0951 /home/jh7x3/MULTICOM_Human_CASP14/examples/T0951.fasta /home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom/ alignment null /home/jh7x3/MULTICOM_Human_CASP14/examples/T0951
+if [[ ! -f "/home/jianliu/MULTICOM_Human_CASP14/test_out/T0951_multicom/mcomb/casp1.pdb" ]];then 
+	perl /home/jianliu/MULTICOM_Human_CASP14/bin/run_multicom_Human.sh T0951 /home/jianliu/MULTICOM_Human_CASP14/examples/T0951.fasta /home/jianliu/MULTICOM_Human_CASP14/test_out/T0951_multicom/ /home/jianliu/MULTICOM_Human_CASP14/examples/T0951
 
 fi
 
 
 printf "\nFinished.."
-printf "\nCheck log file </home/jh7x3/MULTICOM_Human_CASP14/test_out/T0951_multicom.log>\n\n"
-
+printf "\nCheck log file </home/jianliu/MULTICOM_Human_CASP14/test_out/T0951_multicom.log>\n\n"

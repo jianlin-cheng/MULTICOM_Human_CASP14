@@ -10,7 +10,7 @@
 #Date: 10/16/2007
 ##########################################################################
 my $GLOBAL_PATH;
-BEGIN { $GLOBAL_PATH ='/home/jh7x3/MULTICOM_Human_CASP14/'; }
+BEGIN { $GLOBAL_PATH ='/home/jianliu/MULTICOM_Human_CASP14/'; }
 if (@ARGV != 4)
 {
 	die "need three parameters: option file, sequence file, output dir.\n";
@@ -77,8 +77,8 @@ if(!(-f $hhsearch_local_alignment))
 	########  start search the sequence against database
 	print "########  start search the sequence against database\n\n";
 
-	print("perl $GLOBAL_PATH/scripts/hhsearch_main_v15.pl  $GLOBAL_PATH/multicom/src/meta/hhsearch1.5/hhsearch1.5_option $query_file  $full_length_dir/hhsearch15  $hhsearchdb\n\n");
-	system("perl $GLOBAL_PATH/scripts/hhsearch_main_v15.pl  $GLOBAL_PATH/multicom/src/meta/hhsearch1.5/hhsearch1.5_option $query_file  $full_length_dir/hhsearch15  $hhsearchdb");
+	print("perl $GLOBAL_PATH/scripts/hhsearch_main_v15.pl  $GLOBAL_PATH/scripts/hhsearch1.5/hhsearch1.5_option $query_file  $full_length_dir/hhsearch15  $hhsearchdb\n\n");
+	system("perl $GLOBAL_PATH/scripts/hhsearch_main_v15.pl  $GLOBAL_PATH/scripts/hhsearch1.5/hhsearch1.5_option $query_file  $full_length_dir/hhsearch15  $hhsearchdb");
 }
 
 chdir($full_length_dir);

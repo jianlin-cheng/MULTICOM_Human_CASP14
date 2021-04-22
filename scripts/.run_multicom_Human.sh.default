@@ -10,12 +10,12 @@ fastafile=$2
 outputdir=$3
 models=$4
 
-source SOFTWARE_PATH/multicom/tools/python_virtualenv/bin/activate
-export LD_LIBRARY_PATH=SOFTWARE_PATH/multicom/tools/boost_1_55_0/lib/:SOFTWARE_PATH/multicom/tools/OpenBLAS:$LD_LIBRARY_PATH
+source SOFTWARE_PATH/DeepRank3/tools/python_virtualenv/bin/activate
+export LD_LIBRARY_PATH=SOFTWARE_PATH/DeepRank3/tools/boost_1_55_0/lib/:SOFTWARE_PATH/DeepRank3/tools/OpenBLAS:$LD_LIBRARY_PATH
 
 if [ ! -d "$outputdir" ]; then
   mkdir -p $outputdir
 fi
 
-perl SOFTWARE_PATH/scripts/CASP13_human_ts_pipeline.pl $targetid $fastafile $outputdir alignment null $models
+perl SOFTWARE_PATH/scripts/CASP14_human_ts_pipeline.pl $targetid $fastafile $outputdir alignment null null $models
 

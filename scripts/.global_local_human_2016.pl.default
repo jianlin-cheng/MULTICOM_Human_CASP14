@@ -68,8 +68,8 @@ while ($count <= 9)
 
 	#system("/home/casp13/Human_TS/scripts/stx_model_comb_global.pl /home/chengji//software/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3.5 0.8 0.5");
 	#system("/home/casp13/Human_TS/scripts/stx_model_comb_global.pl /home/chengji//software/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.5");
-	print("SOFTWARE_PATH/scripts/stx_model_comb_global.pl SOFTWARE_PATH/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.7\n\n");
-	system("SOFTWARE_PATH/scripts/stx_model_comb_global.pl SOFTWARE_PATH/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.7");
+	print("SOFTWARE_PATH/scripts/stx_model_comb_global.pl SOFTWARE_PATH/tools/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.7\n\n");
+	system("SOFTWARE_PATH/scripts/stx_model_comb_global.pl SOFTWARE_PATH/tools/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 4 0.8 0.7");
 
 	open(PIR, "$output_dir/$name.pir") || die "can't read $output_dir/$name.pir\n";
 	@pir = <PIR>;
@@ -83,8 +83,8 @@ while ($count <= 9)
 	{
 		print "Less than two templates, do local model combination...\n";
 		#system("/home/casp13/Human_TS/scripts/stx_model_comb.pl /home/chengji//software/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 2.5 $length $gdt");
-		print("SOFTWARE_PATH/scripts/stx_model_comb.pl SOFTWARE_PATH/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3 $length $gdt\n\n");
-		system("SOFTWARE_PATH/scripts/stx_model_comb.pl SOFTWARE_PATH/multicom/tools/tm_score/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3 $length $gdt");
+		print("SOFTWARE_PATH/scripts/stx_model_comb.pl SOFTWARE_PATH/tools/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3 $length $gdt\n\n");
+		system("SOFTWARE_PATH/scripts/stx_model_comb.pl SOFTWARE_PATH/tools/TMscore_32 $casp_model_dir $name.score $fasta_file $output_dir/$name.pir 3 $length $gdt");
 
 		open(PIR, "$output_dir/$name.pir") || die "can't read $output_dir/$name.pir\n";
 		@pir = <PIR>;
@@ -102,8 +102,8 @@ while ($count <= 9)
 	print "generate model...\n";
 	#system("/home/casp13/Human_TS/scripts/pir2ts_energy.pl /home/chengji//software/prosys/modeller7v7/ $casp_model_dir $output_dir $output_dir/$name.pir 3");
 	#system("/home/casp13/Human_TS/scripts/pir2ts_energy_9v7.pl /home/chengji//software/modeller9v7/ $casp_model_dir $output_dir $output_dir/$name.pir 5");
-	print("perl SOFTWARE_PATH/scripts/pir2ts_energy_9v16.pl SOFTWARE_PATH/multicom/tools/modeller-9.16/ $casp_model_dir $output_dir $output_dir/$name.pir 8\n\n");
-	system("perl SOFTWARE_PATH/scripts/pir2ts_energy_9v16.pl SOFTWARE_PATH/multicom/tools/modeller-9.16/ $casp_model_dir $output_dir $output_dir/$name.pir 8");
+	print("perl SOFTWARE_PATH/scripts/pir2ts_energy_9v16.pl SOFTWARE_PATH/tools/modeller-9.16/ $casp_model_dir $output_dir $output_dir/$name.pir 8\n\n");
+	system("perl SOFTWARE_PATH/scripts/pir2ts_energy_9v16.pl SOFTWARE_PATH/tools/modeller-9.16/ $casp_model_dir $output_dir $output_dir/$name.pir 8");
 
 		
 

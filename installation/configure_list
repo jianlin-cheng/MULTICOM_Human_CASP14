@@ -1,5 +1,5 @@
 # multicom main scripts
-scripts/CASP13_human_ts_pipeline.pl
+scripts/CASP14_human_ts_pipeline.pl
 scripts/Auto_human_server.pl
 scripts/global_local_human_2016.pl
 
